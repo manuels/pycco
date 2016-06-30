@@ -254,7 +254,8 @@ def highlight(sections, language, preserve_paths=True, outdir=None):
             docs_text = section['docs_text']
         section["docs_html"] = markdown(preprocess(docs_text,
                                                    preserve_paths=preserve_paths,
-                                                   outdir=outdir))
+                                                   outdir=outdir),
+                                        extensions=['mdx_math'])
         section["num"] = i
 
     return sections
@@ -291,7 +292,18 @@ def generate_html(source, sections, preserve_paths=True, outdir=None):
         "source": source,
     })
 
-    return re.sub(r"__DOUBLE_OPEN_STACHE__", "{{", rendered).encode("utf-8")
+    html = re.sub(r"__DOUBLE_OPEN_STACHE__", "{{", rendered).encode("utf-8")
+    html += '''
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  extensions: ["MathMenu.js", "MathZoom.js"]
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+    '''
+    return html
 
 # === Helpers & Setup ===
 
@@ -305,6 +317,7 @@ import time
 import pycco.generate_index as generate_index
 
 from markdown import markdown
+
 from os import path
 from pygments import lexers, formatters
 

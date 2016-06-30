@@ -1,3 +1,4 @@
 pystache==0.5.4
 Pygments==2.0.2
 markdown==2.6.3
+python-markdown-math==0.2
