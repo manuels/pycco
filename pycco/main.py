@@ -83,7 +83,7 @@ def parse(code, language):
     if lines[0].startswith("#!"):
         lines.pop(0)
 
-    if language["name"] == "python":
+    if language["name"] == "python3":
         for linenum, line in enumerate(lines[:2]):
             if re.search(r'coding[:=]\s*([-\w.]+)', lines[linenum]):
                 lines.pop(linenum)
@@ -351,7 +351,7 @@ languages = {
     ".rb": {"name": "ruby", "symbol": "#",
             "multistart": "=begin", "multiend": "=end"},
 
-    ".py": {"name": "python", "symbol": "#",
+    ".py": {"name": "python3", "symbol": "#",
             "multistart": '"""', "multiend": '"""'},
 
     ".scm": {"name": "scheme", "symbol": ";;",
